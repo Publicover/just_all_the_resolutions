@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+First post to http://localhost:3000/auth/login to get an auth token. Use email and password in the body with headers Content-Type application/json and Accept application/json.
+{
+  "email":"example@place.com",
+  "password":"SuperHardToGuessPassword"
+}
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Use the token in the response in the header of all the following requests as Authorization. 
