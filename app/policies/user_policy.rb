@@ -12,7 +12,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    admin_or_owner?
+    return true if user.admin?
+    return true if record.id == user.id
+
+    false
   end
 
   def create?
@@ -27,7 +30,22 @@ class UserPolicy < ApplicationPolicy
     show?
   end
 
+  def base_attributes
+    [:email, :password]
+  end
+
+  def admin_attributes
+    [:role]
+  end
+
+  def member_attributes
+    []
+  end
+
   def permitted_attributes
-    [:email, :password, :role]
+    return base_attributes.concat(admin_attributes) if user.admin?
+    return base_attributes.concat(member_attributes) if user.member?
+
+    []
   end
 end

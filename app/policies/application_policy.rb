@@ -4,6 +4,9 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
+    # debugger
+    # raise Pundit::NotAuthorizedError unless user
+
     @user = user
     @record = record
   end
@@ -35,7 +38,7 @@ class ApplicationPolicy
   end
 
   def admin?
-    return true if user.admin?
+    return true if @user.admin?
 
     false
   end

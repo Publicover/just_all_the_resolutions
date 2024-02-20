@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  skip_before_action :authorize_request, only: :create
   before_action :set_user, except: [:index, :create]
 
   def index
@@ -15,15 +14,19 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create!(user_params)
-    auth_token = AuthenticateUser.new(user.email, user.password).call
-    response = { message: Message.account_created, auth_token: auth_token }
-    json_response(response, :created)
+    @user = User.new(user_params)
+    authorize @user
+    raise(ExceptionHandler::UnprocessableEntity, Message.create_failed) unless @user.save
+
+    serialized_response(@user)
   end
 
   def update
-    @user.update(user_params)
-    serialized_response(@user)
+    return json_response({ message: Message.update_failed, status: :unprocessable_entity }) if user_params.blank?
+
+    raise(ExceptionHandler::UnprocessableEntity, Message.update_failed) unless @user.update(user_params)
+
+    serialized_response(@user) if @user.update(user_params)
   end
 
   def destroy

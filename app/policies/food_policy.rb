@@ -12,7 +12,7 @@ class FoodPolicy < ApplicationPolicy
   end
 
   def show?
-    index?
+    user?
   end
 
   def create?
@@ -28,6 +28,6 @@ class FoodPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:email, :password, :role]
+    [:name, :kcal_per_100g]
   end
 end

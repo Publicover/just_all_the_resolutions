@@ -1,7 +1,7 @@
 one:
   email: admin@thing.com
   password_digest: <%= BCrypt::Password.create('password', cost: 4) %>
-  role: 'admin'
+  role: admin
 
 two:
   email: member@thing.com

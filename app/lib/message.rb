@@ -29,6 +29,14 @@ class Message
     "Account could not be created."
   end
 
+  def self.create_failed
+    "Create failed. Please fill in all required fields."
+  end
+
+  def self.update_failed
+    "Update failed. Please fill in all required fields."
+  end
+
   def self.expired_token
     "Sorry, your token has expired. Please log in again to continue."
   end
